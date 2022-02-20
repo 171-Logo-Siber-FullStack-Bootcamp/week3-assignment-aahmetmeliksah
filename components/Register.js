@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 
-export default function Register() {
+export default function Register({ navigation }) {
   const [register, setRegister] = useState({
     name: "",
     email: "",
@@ -45,7 +45,7 @@ export default function Register() {
             email: "",
             password: "",
           });
-          props.navigation.navigate("login").catch((err) => {
+          navigation.navigate("login").catch((err) => {
             setRegister({ errorMassage: err.massage });
           });
         });
@@ -66,13 +66,32 @@ export default function Register() {
           style={styles.input}
           onChangeText={(value) => updateInputVal(value, "name")}
         />
+
         <TextInput
           placeholder="Enter an email address"
           value={register.email}
-          style={styles.email}
+          style={styles.input}
           onChangeText={(value) => updateInputVal(value, "email")}
         />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={register.password}
+          onChangeText={(value) => updateInputVal(value, "password")}
+          maxLength={30}
+          secureTextEntry={true}
+        />
         <Button onPress={registerUser} title="Register" />
+
+        <Text
+          style={styles.loginText}
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
+        >
+          Already have an account? Click here to login
+        </Text>
       </View>
     );
   }
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     alignSelf: "center",
     borderColor: "#ccc",
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
   },
   loginText: {
     color: "#3740FE",
